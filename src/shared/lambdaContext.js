@@ -1,3 +1,9 @@
+function fixExceptionObjectResult(ex) {
+    const serialized = JSON.stringify(ex, Object.getOwnPropertyNames(ex));
+
+    return serialized;
+}
+
 async function lambdaContext(func) {
     try {
         const result = await func();
@@ -12,7 +18,7 @@ async function lambdaContext(func) {
     catch (ex) {
         return {
             statusCode: 500,
-            body: ex.getMessage(),
+            body: fixExceptionObjectResult(ex),
         }
     }
 }
