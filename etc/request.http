@@ -1,0 +1,24 @@
+@serviceUrl = https://api.acikkaynak.info
+
+
+##
+## AUTH
+##
+
+GET {{serviceUrl}}/auth/github
+Content-Type: application/json
+
+###
+
+GET {{serviceUrl}}/auth/githubCallback?code=2349244da729070e012c&state=
+Content-Type: application/json
+
+###
+
+##
+## GITHUB
+##
+
+GET {{serviceUrl}}/github/profile
+Content-Type: application/json
+Authorization: token 9f7512b316f776fa888c9aa8a39ee00ce19fe3e1

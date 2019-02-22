@@ -1,0 +1,110 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: acikkaynak-api # NOTE: update this with your service name
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+# frameworkVersion: "=X.X.X"
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+
+# you can overwrite defaults here
+#  stage: dev
+  region: eu-west-1
+
+# you can add statements to the Lambda function's IAM Role here
+#  iamRoleStatements:
+#    - Effect: "Allow"
+#      Action:
+#        - "s3:ListBucket"
+#      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
+#    - Effect: "Allow"
+#      Action:
+#        - "s3:PutObject"
+#      Resource:
+#        Fn::Join:
+#          - ""
+#          - - "arn:aws:s3:::"
+#            - "Ref" : "ServerlessDeploymentBucket"
+#            - "/*"
+
+# you can define service wide environment variables here
+# aws ssm put-parameter --name AUTH_GITHUB_CLIENT_ID --type String --value ..
+# aws ssm put-parameter --name AUTH_GITHUB_CLIENT_SECRET --type String --value ..
+# aws ssm put-parameter --name MONGODB_CONNECTION_STRING --type String --value ..
+  environment:
+    WEBSERVICE_ENDPOINT: https://api.acikkaynak.info
+    AUTH_GITHUB_CLIENT_ID: ${ssm:AUTH_GITHUB_CLIENT_ID}
+    AUTH_GITHUB_CLIENT_SECRET: ${ssm:AUTH_GITHUB_CLIENT_SECRET}
+    MONGODB_CONNECTION_STRING: ${ssm:MONGODB_CONNECTION_STRING}
+    MONGODB_DATABASE_NAME: acikkaynak
+
+# you can add packaging information here
+#package:
+#  include:
+#    - include-me.js
+#    - include-me-dir/**
+#  exclude:
+#    - exclude-me.js
+#    - exclude-me-dir/**
+
+functions:
+  index:
+    handler: src/index.default
+    events:
+      - http:
+          path: ''
+          method: get
+  authGithub:
+    handler: src/auth/github.default
+    events:
+      - http:
+          path: 'auth/github'
+          method: get
+  authGithubCallback:
+    handler: src/auth/githubCallback.default
+    events:
+      - http:
+          path: 'auth/githubCallback'
+          method: get
+  githubProfile:
+    handler: src/github/profile.default
+    events:
+      - http:
+          path: 'github/profile'
+          method: get
+
+# you can add CloudFormation resource templates here
+#resources:
+#  Resources:
+#    NewResource:
+#      Type: AWS::S3::Bucket
+#      Properties:
+#        BucketName: my-new-bucket
+#  Outputs:
+#     NewOutput:
+#       Description: "Description for the output"
+#       Value: "Some output value"
+
+plugins:
+  - serverless-domain-manager
+
+custom:
+  customDomain:
+    domainName: api.acikkaynak.info
+    basePath: ''
+    stage: ${self:provider.stage}
+    createRoute53Record: true

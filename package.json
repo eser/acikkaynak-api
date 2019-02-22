@@ -1,0 +1,49 @@
+{
+  "name": "acikkaynak-api",
+  "description": "",
+  "keywords": [],
+  "version": "1.0.0",
+  "homepage": "https://github.com/acikkaynak/acikkaynak-api#readme",
+  "author": "Eser Ozvataf <eser@ozvataf.com>",
+  "contributors": [
+    {
+      "name": "Eser Ozvataf",
+      "email": "eser@ozvataf.com",
+      "url": "http://eser.ozvataf.com/"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acikkaynak/acikkaynak-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/acikkaynak/acikkaynak-api/issues"
+  },
+  "license": "Apache-2.0",
+  "main": "./src/index.js",
+  "engines": {
+    "node": ">=8.10.0"
+  },
+  "scripts": {
+    "lint": "eslint --ext .js,.jsx,.mjs ./src/",
+    "test": "jest",
+    "coverage": "jest --coverage && codecov"
+  },
+  "files": [
+    "src"
+  ],
+  "bin": {},
+  "dependencies": {
+    "client-oauth2": "^4.2.3",
+    "mongodb": "^3.1.13",
+    "node-fetch": "^2.3.0"
+  },
+  "devDependencies": {
+    "codecov": "^3.2.0",
+    "eslint": "^5.14.1",
+    "eslint-config-eser": "^2.0.7",
+    "eslint-plugin-import": "^2.16.0",
+    "jest": "^24.1.0",
+    "serverless-domain-manager": "^2.6.13"
+  }
+}

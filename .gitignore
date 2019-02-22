@@ -1,0 +1,14 @@
+# os-specific junk
+.DS_Store
+
+# temp directory
+tmp/
+
+# package directories
+node_modules/
+
+# Serverless directories
+.serverless
+
+# Environmental settings
+.env
