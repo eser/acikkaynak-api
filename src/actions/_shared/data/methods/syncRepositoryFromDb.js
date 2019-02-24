@@ -1,10 +1,11 @@
 const dataContext = require('../dataContext');
 
-async function syncRepositoryFromDb(userRepository) {
-    await dataContext(async (db) => {
+function syncRepositoryFromDb(userRepository, owner) {
+    return dataContext(async (db) => {
         const fields = {
             $set: {
                 githubId: userRepository.id,
+                owner: owner,
                 ownerGithubId: (userRepository.owner !== undefined) ? userRepository.owner.id : null,
                 name: userRepository.name,
                 description: userRepository.description,
@@ -29,14 +30,19 @@ async function syncRepositoryFromDb(userRepository) {
             },
         };
 
-        await db.collection('repositories').updateOne(
+        const result = await db.collection('repositories').findOneAndUpdate(
             { githubId: userRepository.id },
             fields,
             {
-                upsert: true,
-                w: 1,
+                'upsert': true,
+                'new': true,
+                'w': 1,
             }
         );
+
+        // todo check if result.ok
+
+        return result.value;
     });
 }
 

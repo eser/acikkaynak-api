@@ -34,6 +34,7 @@
   ],
   "bin": {},
   "dependencies": {
+    "aws-sdk": "^2.409.0",
     "client-oauth2": "^4.2.3",
     "mongodb": "^3.1.13",
     "node-fetch": "^2.3.0"

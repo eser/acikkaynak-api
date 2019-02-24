@@ -19,7 +19,7 @@ async function lambdaContext(func) {
         return {
             statusCode: 500,
             body: fixExceptionObjectResult(ex),
-        }
+        };
     }
 }
 

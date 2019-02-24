@@ -26,7 +26,14 @@ provider:
   region: eu-west-1
 
 # you can add statements to the Lambda function's IAM Role here
-#  iamRoleStatements:
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - 'sqs:SendMessage'
+      Resource:
+        - Fn::GetAtt: [ UsersQueue, Arn ]
+        - Fn::GetAtt: [ RepositoriesQueue, Arn ]
+
 #    - Effect: "Allow"
 #      Action:
 #        - "s3:ListBucket"
@@ -51,6 +58,10 @@ provider:
     AUTH_GITHUB_CLIENT_SECRET: ${ssm:AUTH_GITHUB_CLIENT_SECRET}
     MONGODB_CONNECTION_STRING: ${ssm:MONGODB_CONNECTION_STRING}
     MONGODB_DATABASE_NAME: acikkaynak
+    SQS_QUEUE_USERS:
+      Ref: UsersQueue
+    SQS_QUEUE_REPOSITORIES:
+      Ref: RepositoriesQueue
 
 # you can add packaging information here
 #package:
@@ -63,33 +74,41 @@ provider:
 
 functions:
   index:
-    handler: src/index.default
+    handler: src/routes/index.default
     events:
       - http:
           path: ''
           method: get
   authGithub:
-    handler: src/auth/github.default
+    handler: src/routes/auth/github.default
     events:
       - http:
           path: 'auth/github'
           method: get
   authGithubCallback:
-    handler: src/auth/githubCallback.default
+    handler: src/routes/auth/githubCallback.default
     events:
       - http:
           path: 'auth/githubCallback'
           method: get
   githubProfile:
-    handler: src/github/profile.default
+    handler: src/routes/github/profile.default
     events:
       - http:
           path: 'github/profile'
           method: get
 
 # you can add CloudFormation resource templates here
-#resources:
-#  Resources:
+resources:
+  Resources:
+    UsersQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: Users
+    RepositoriesQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: Repositories
 #    NewResource:
 #      Type: AWS::S3::Bucket
 #      Properties:

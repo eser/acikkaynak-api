@@ -1,7 +1,7 @@
 const dataContext = require('../dataContext');
 
-async function syncUserFromDb(user, loggedIn) {
-    await dataContext(async (db) => {
+function syncUserFromDb(user, loggedIn) {
+    return dataContext(async (db) => {
         const fields = {
             $set: {
                 githubId: user.id,
@@ -34,14 +34,19 @@ async function syncUserFromDb(user, loggedIn) {
             fields.$setOnInsert = { loggedIn: loggedIn };
         }
 
-        await db.collection('users').updateOne(
+        const result = await db.collection('users').findOneAndUpdate(
             { githubId: user.id },
             fields,
             {
-                upsert: true,
-                w: 1,
+                'upsert': true,
+                'new': true,
+                'w': 1,
             }
         );
+
+        // todo check if result.ok
+
+        return result.value;
     });
 }
 
