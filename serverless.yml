@@ -32,6 +32,7 @@ provider:
         - 'sqs:SendMessage'
       Resource:
         - Fn::GetAtt: [ UsersQueue, Arn ]
+        - Fn::GetAtt: [ OrganizationsQueue, Arn ]
         - Fn::GetAtt: [ RepositoriesQueue, Arn ]
 
 #    - Effect: "Allow"
@@ -60,6 +61,8 @@ provider:
     MONGODB_DATABASE_NAME: acikkaynak
     SQS_QUEUE_USERS:
       Ref: UsersQueue
+    SQS_QUEUE_ORGANIZATIONS:
+      Ref: OrganizationsQueue
     SQS_QUEUE_REPOSITORIES:
       Ref: RepositoriesQueue
 
@@ -97,6 +100,24 @@ functions:
       - http:
           path: 'github/profile'
           method: get
+  githubImportUser:
+    handler: src/routes/github/importUser.default
+    events:
+      - sqs:
+          arn: [ UsersQueue, Arn ]
+          batchSize: 1
+  githubImportOrganization:
+    handler: src/routes/github/importOrganization.default
+    events:
+      - sqs:
+          arn: [ OrganizationsQueue, Arn ]
+          batchSize: 1
+  githubImportRepositories:
+    handler: src/routes/github/importRepositories.default
+    events:
+      - sqs:
+          arn: [ RepositoriesQueue, Arn ]
+          batchSize: 1
 
 # you can add CloudFormation resource templates here
 resources:
@@ -105,6 +126,10 @@ resources:
       Type: AWS::SQS::Queue
       Properties:
         QueueName: Users
+    OrganizationsQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: Organizations
     RepositoriesQueue:
       Type: AWS::SQS::Queue
       Properties:

@@ -24,7 +24,7 @@ async function main(query) {
             accessToken: tokens.accessToken,
             refreshToken: tokens.refreshToken,
 
-            userId: userRecord._id,
+            userId: userRecord._id.toString(),
             userGithubId: userRecord.githubId,
         }
     );

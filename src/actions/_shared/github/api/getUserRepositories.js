@@ -1,18 +1,74 @@
-const nfetch = require('node-fetch');
+const graphql = require('@octokit/graphql');
 
-async function getUserRepositories(authToken) {
-    const response = await nfetch(
-        'https://api.github.com/user/repos?visibility=public&per_page=100',
-        {
-            method: 'GET',
-            // body: JSON.stringify(),
-            headers: {
-                Authorization: authToken,
-            },
-        }
-    );
+async function getUserRepositories(authToken, cursor) {
+    let paging;
 
-    const result = await response.json();
+    if (cursor === undefined) {
+        paging = '';
+    }
+    else {
+        paging = ` after:${cursor}`;
+    }
+
+    const response = await graphql({
+        query: `
+          query {
+            viewer {
+              repositories(first: 100${paging}) {
+                totalCount
+                nodes {
+                  id
+                  owner {
+                    __typename
+                    id
+                  }
+                  name
+                  description
+                  homepageUrl
+                  primaryLanguage {
+                    id
+                    name
+                  }
+                  licenseInfo {
+                    id
+                    name
+                  }
+                  isArchived
+                  isFork
+                  defaultBranchRef {
+                    name
+                  }
+                  url
+                  sshUrl
+                  stargazers {
+                    totalCount
+                  }
+                  watchers {
+                    totalCount
+                  }
+                  collaborators {
+                    totalCount
+                  }
+                  issues {
+                    totalCount
+                  }
+                  createdAt
+                  updatedAt
+                }
+                pageInfo {
+                  endCursor
+                  hasNextPage
+                }
+              }
+            }
+          }
+        `,
+        headers: {
+            authorization: authToken,
+        },
+    });
+
+    const result = response.viewer;
 
     return result;
 }
