@@ -4,28 +4,26 @@ function syncRepositoryFromDb(userRepository, owner) {
     return dataContext(async (db) => {
         const fields = {
             $set: {
-                githubId: userRepository.id,
-                owner: owner,
-                ownerGithubId: (userRepository.owner !== undefined) ? userRepository.owner.id : null,
-                name: userRepository.name,
-                description: userRepository.description,
-                homepage: userRepository.homepageUrl,
-                language: (userRepository.primaryLanguage !== undefined) ? userRepository.primaryLanguage.id : null,
-                license: (userRepository.licenseInfo !== undefined) ? userRepository.licenseInfo.id : null,
-                isArchived: userRepository.isArchived,
-                isFork: userRepository.isFork,
-                defaultBranch: (userRepository.defaultBranchRef !== undefined) ? userRepository.defaultBranchRef.name : null,
-                githubUri: userRepository.url,
-                sshUri: userRepository.sshUrl,
-                stats: {
-                    stars: userRepository.stargazers.totalCount,
-                    watches: userRepository.watchers.totalCount,
-                    forks: userRepository.forkCount,
-                    collaborators: userRepository.collaborators.totalCount,
-                    issues: userRepository.issues.totalCount,
-                    createdAt: userRepository.createdAt,
-                    updatedAt: userRepository.updatedAt,
-                },
+                'githubId': userRepository.id,
+                'owner': owner,
+                'ownerGithubId': (userRepository.owner !== undefined) ? userRepository.owner.id : null,
+                'name': userRepository.name,
+                'description': userRepository.description,
+                'homepage': userRepository.homepageUrl,
+                'language': (userRepository.primaryLanguage !== undefined) ? userRepository.primaryLanguage.id : null,
+                'license': (userRepository.licenseInfo !== undefined) ? userRepository.licenseInfo.id : null,
+                'isArchived': userRepository.isArchived,
+                'isFork': userRepository.isFork,
+                'defaultBranch': (userRepository.defaultBranchRef !== undefined) ? userRepository.defaultBranchRef.name : null,
+                'githubUri': userRepository.url,
+                'sshUri': userRepository.sshUrl,
+                'stats.stars': userRepository.stargazers.totalCount,
+                'stats.watches': userRepository.watchers.totalCount,
+                'stats.forks': userRepository.forkCount,
+                'stats.collaborators': userRepository.collaborators.totalCount,
+                'stats.issues': userRepository.issues.totalCount,
+                'stats.createdAt': userRepository.createdAt,
+                'stats.updatedAt': userRepository.updatedAt,
             },
         };
 
@@ -34,8 +32,7 @@ function syncRepositoryFromDb(userRepository, owner) {
             fields,
             {
                 'upsert': true,
-                'new': true,
-                'w': 1,
+                'returnOriginal': false,
             }
         );
 

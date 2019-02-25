@@ -4,19 +4,17 @@ function syncOrganizationFromDb(userOrganization) {
     return dataContext(async (db) => {
         const fields = {
             $set: {
-                githubId: userOrganization.id,
-                name: userOrganization.name,
-                username: userOrganization.login,
-                email: userOrganization.email,
-                location: userOrganization.location,
-                isVerified: userOrganization.isVerified,
-                profileImageUri: userOrganization.avatarUrl,
-                githubUri: userOrganization.url,
-                siteUri: userOrganization.websiteUrl,
-                stats: {
-                    repositories: userOrganization.repositories.totalCount,
-                    members: userOrganization.memberStatuses.totalCount,
-                },
+                'githubId': userOrganization.id,
+                'name': userOrganization.name,
+                'login': userOrganization.login,
+                'email': userOrganization.email,
+                'location': userOrganization.location,
+                'isVerified': userOrganization.isVerified,
+                'profileImageUri': userOrganization.avatarUrl,
+                'githubUri': userOrganization.url,
+                'siteUri': userOrganization.websiteUrl,
+                'stats.repositories': userOrganization.repositories.totalCount,
+                'stats.members': userOrganization.memberStatuses.totalCount,
             },
         };
 
@@ -25,8 +23,7 @@ function syncOrganizationFromDb(userOrganization) {
             fields,
             {
                 'upsert': true,
-                'new': true,
-                'w': 1,
+                'returnOriginal': false,
             }
         );
 

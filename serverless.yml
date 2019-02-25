@@ -104,19 +104,22 @@ functions:
     handler: src/routes/github/importUser.default
     events:
       - sqs:
-          arn: [ UsersQueue, Arn ]
+          arn:
+            Fn::GetAtt: [ UsersQueue, Arn ]
           batchSize: 1
   githubImportOrganization:
     handler: src/routes/github/importOrganization.default
     events:
       - sqs:
-          arn: [ OrganizationsQueue, Arn ]
+          arn:
+            Fn::GetAtt: [ OrganizationsQueue, Arn ]
           batchSize: 1
-  githubImportRepositories:
-    handler: src/routes/github/importRepositories.default
+  githubImportRepository:
+    handler: src/routes/github/importRepository.default
     events:
       - sqs:
-          arn: [ RepositoriesQueue, Arn ]
+          arn:
+            Fn::GetAtt: [ RepositoriesQueue, Arn ]
           batchSize: 1
 
 # you can add CloudFormation resource templates here
