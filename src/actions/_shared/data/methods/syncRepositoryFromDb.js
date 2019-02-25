@@ -1,3 +1,4 @@
+const { ObjectID } = require('mongodb');
 const dataContext = require('../dataContext');
 
 function syncRepositoryFromDb(userRepository, owner) {
@@ -5,7 +6,7 @@ function syncRepositoryFromDb(userRepository, owner) {
         const fields = {
             $set: {
                 'githubId': userRepository.id,
-                'owner': owner,
+                'owner': ObjectID(owner),
                 'ownerGithubId': (userRepository.owner !== undefined) ? userRepository.owner.id : null,
                 'name': userRepository.name,
                 'description': userRepository.description,

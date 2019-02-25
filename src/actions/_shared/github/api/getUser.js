@@ -34,7 +34,7 @@ async function getUser(authToken) {
           }
         `,
         headers: {
-            authorization: authToken,
+            authorization: `token ${authToken}`,
         },
     });
 

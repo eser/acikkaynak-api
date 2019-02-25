@@ -1,13 +1,13 @@
 const graphql = require('@octokit/graphql');
 
-async function getUserOrganizations(authToken, cursor) {
+async function getUserOrganizationsSingle(authToken, cursor) {
     let paging;
 
     if (cursor === undefined) {
         paging = '';
     }
     else {
-        paging = ` after:${cursor}`;
+      paging = ` after: "${cursor}"`;
     }
 
     const response = await graphql({
@@ -42,11 +42,30 @@ async function getUserOrganizations(authToken, cursor) {
           }
         `,
         headers: {
-            authorization: authToken,
+            authorization: `token ${authToken}`,
         },
     });
 
-    const result = response.viewer;
+    const result = response.viewer.organizations;
+
+    return result;
+}
+
+async function getUserOrganizations(authToken) {
+    let result = [];
+    let lastCursor = undefined;
+
+    for (;;) {
+        const page = await getUserOrganizationsSingle(authToken, lastCursor);
+
+        result = result.concat(page.nodes);
+
+        if (!page.pageInfo.hasNextPage) {
+            break;
+        }
+
+        lastCursor = page.pageInfo.endCursor;
+    }
 
     return result;
 }

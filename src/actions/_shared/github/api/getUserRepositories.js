@@ -1,13 +1,13 @@
 const graphql = require('@octokit/graphql');
 
-async function getUserRepositories(authToken, cursor) {
+async function getUserRepositoriesSingle(authToken, cursor) {
     let paging;
 
     if (cursor === undefined) {
         paging = '';
     }
     else {
-        paging = ` after:${cursor}`;
+        paging = ` after: "${cursor}"`;
     }
 
     const response = await graphql({
@@ -64,11 +64,30 @@ async function getUserRepositories(authToken, cursor) {
           }
         `,
         headers: {
-            authorization: authToken,
+            authorization: `token ${authToken}`,
         },
     });
 
-    const result = response.viewer;
+    const result = response.viewer.repositories;
+
+    return result;
+}
+
+async function getUserRepositories(authToken) {
+    let result = [];
+    let lastCursor = undefined;
+
+    for (;;) {
+        const page = await getUserRepositoriesSingle(authToken, lastCursor);
+
+        result = result.concat(page.nodes);
+
+        if (!page.pageInfo.hasNextPage) {
+            break;
+        }
+
+        lastCursor = page.pageInfo.endCursor;
+    }
 
     return result;
 }

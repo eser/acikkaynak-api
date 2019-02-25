@@ -14,7 +14,7 @@ async function main(query) {
         query: query,
     });
 
-    const user = await getUser(`token ${tokens.accessToken}`);
+    const user = await getUser(tokens.accessToken);
     const userRecord = await syncUserFromDb(user, true);
 
     await queueAdd(
