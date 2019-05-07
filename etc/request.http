@@ -1,5 +1,17 @@
 @serviceUrl = https://api.acikkaynak.info
 
+##
+## GRAPHQL
+##
+
+POST {{serviceUrl}}/graphql
+Content-Type: application/json
+
+query {
+  hello
+}
+
+###
 
 ##
 ## AUTH

@@ -82,24 +82,39 @@ functions:
       - http:
           path: ''
           method: get
+          cors: true
+  graphql:
+    handler: src/routes/graphql.default
+    events:
+      - http:
+          path: 'graphql'
+          method: post
+          cors: true
+      - http:
+          path: 'graphql'
+          method: get
+          cors: true
   authGithub:
     handler: src/routes/auth/github.default
     events:
       - http:
           path: 'auth/github'
           method: get
+          cors: true
   authGithubCallback:
     handler: src/routes/auth/githubCallback.default
     events:
       - http:
           path: 'auth/githubCallback'
           method: get
+          cors: true
   githubProfile:
     handler: src/routes/github/profile.default
     events:
       - http:
           path: 'github/profile'
           method: get
+          cors: true
   githubImportUser:
     handler: src/routes/github/importUser.default
     events:
