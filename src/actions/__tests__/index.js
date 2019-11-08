@@ -1,11 +1,9 @@
-const index = require('../index');
+const indexAction = require('../index').action;
 
 describe('dummyCategory', () => {
-    test('message check', () => {
-        const instance = index({});
+    test('message check', async () => {
+        const instance = await indexAction({});
 
-        const message = instance.message;
-
-        expect(message).toEqual('Go Serverless v1.0! Your function executed successfully!');
+        expect(instance.message).toEqual('Go Serverless v1.0! Your function executed successfully!');
     });
 });

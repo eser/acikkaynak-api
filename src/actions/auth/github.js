@@ -1,9 +1,17 @@
+const lambdaContext = require('../_shared/lambdaContext');
 const oauthClient = require('../_shared/github/oauthClient');
 
-function main() {
+function action() {
     return {
         uri: oauthClient.code.getUri(),
     };
 }
 
-module.exports = main;
+function route() {
+    return lambdaContext(() => action());
+}
+
+module.exports = {
+    'default': route,
+    'action': action,
+};

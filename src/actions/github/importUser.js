@@ -1,8 +1,9 @@
+const lambdaContext = require('../_shared/lambdaContext');
 const getUserRepositories = require('../_shared/github/api/getUserRepositories');
 const syncRepositoryFromDb = require('../_shared/data/methods/syncRepositoryFromDb');
 const queueAdd = require('../_shared/queue/add');
 
-async function importRepositories(message) {
+async function action(message) {
     console.log(message);
 
     const userRepositories = await getUserRepositories(message.accessToken);
@@ -27,8 +28,13 @@ async function importRepositories(message) {
     }
 }
 
-async function main(message) {
-    await importRepositories(message);
+function route(event) {
+    return lambdaContext(
+        () => action(JSON.parse(event.Records[0].body)),
+    );
 }
 
-module.exports = main;
+module.exports = {
+    'default': route,
+    'action': action,
+};

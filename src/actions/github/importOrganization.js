@@ -1,5 +1,16 @@
-async function main(message) {
+const lambdaContext = require('../_shared/lambdaContext');
+
+async function action(message) {
     console.log(message);
 }
 
-module.exports = main;
+function route(event) {
+    return lambdaContext(
+        () => action(JSON.parse(event.Records[0].body)),
+    );
+}
+
+module.exports = {
+    'default': route,
+    'action': action,
+};

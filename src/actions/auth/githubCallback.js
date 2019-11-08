@@ -1,3 +1,4 @@
+const lambdaContext = require('../_shared/lambdaContext');
 const oauthClient = require('../_shared/github/oauthClient');
 const getUser = require('../_shared/github/api/getUser');
 const syncUserFromDb = require('../_shared/data/methods/syncUserFromDb');
@@ -9,7 +10,7 @@ async function getTokens(uri) {
     return tokens;
 }
 
-async function main(query) {
+async function action(query) {
     const tokens = await getTokens({
         query: query,
     });
@@ -36,4 +37,13 @@ async function main(query) {
     };
 }
 
-module.exports = main;
+function route(event) {
+    return lambdaContext(
+        () => action(event.queryStringParameters),
+    );
+}
+
+module.exports = {
+    'default': route,
+    'action': action,
+};

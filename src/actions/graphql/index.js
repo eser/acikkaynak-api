@@ -1,6 +1,7 @@
 const { ApolloServer, gql } = require('apollo-server-lambda');
+const lambdaContext = require('../_shared/lambdaContext');
 
-function main(authorizationHeader) {
+function action(authorizationHeader) {
     // Construct a schema, using GraphQL schema language
     const typeDefs = gql`
 type Query {
@@ -36,4 +37,13 @@ type Query {
     return handler;
 }
 
-module.exports = main;
+function route(event) {
+    return lambdaContext(
+        () => action(event.headers.Authorization),
+    );
+}
+
+module.exports = {
+    'default': route,
+    'action': action,
+};
