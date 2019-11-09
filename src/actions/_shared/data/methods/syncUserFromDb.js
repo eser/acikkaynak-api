@@ -37,7 +37,7 @@ function syncUserFromDb(user, isLoggedIn) {
             {
                 'upsert': true,
                 'returnOriginal': false,
-            }
+            },
         );
 
         // todo check if result.ok

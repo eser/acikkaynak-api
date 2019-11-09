@@ -5,7 +5,7 @@ async function dataContext(func) {
         process.env.MONGODB_CONNECTION_STRING,
         {
             useNewUrlParser: true,
-        }
+        },
     );
     const db = client.db(process.env.MONGODB_DATABASE_NAME);
 

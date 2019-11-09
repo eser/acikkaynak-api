@@ -10,7 +10,7 @@ async function getUserRepositoriesSingle(authToken, cursor) {
         paging = ` after: "${cursor}"`;
     }
 
-    const response = await graphql({
+    const response = await graphql.graphql({
         query: `
           query {
             viewer {
@@ -75,9 +75,10 @@ async function getUserRepositoriesSingle(authToken, cursor) {
 
 async function getUserRepositories(authToken) {
     let result = [];
-    let lastCursor = undefined;
+    let lastCursor; // will be initialized as undefined
 
     for (;;) {
+        // eslint-disable-next-line no-await-in-loop
         const page = await getUserRepositoriesSingle(authToken, lastCursor);
 
         result = result.concat(page.nodes);

@@ -24,7 +24,7 @@ function syncOrganizationFromDb(userOrganization) {
             {
                 'upsert': true,
                 'returnOriginal': false,
-            }
+            },
         );
 
         // todo check if result.ok

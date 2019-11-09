@@ -1,7 +1,7 @@
 const graphql = require('@octokit/graphql');
 
 async function getUser(authToken) {
-    const response = await graphql({
+    const response = await graphql.graphql({
         query: `
           query {
             viewer {

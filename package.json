@@ -1,15 +1,19 @@
 {
   "name": "acikkaynak-api",
-  "description": "",
-  "keywords": [],
-  "version": "1.0.0",
-  "homepage": "https://github.com/acikkaynak/acikkaynak-api#readme",
-  "author": "Eser Ozvataf <eser@ozvataf.com>",
+  "description": "acik kaynak api",
+  "keywords": [
+    "acik",
+    "kaynak",
+    "api"
+  ],
+  "version": "0.10.1",
+  "homepage": "https://api.acik-kaynak.org",
+  "author": "Acik Kaynak Inisiyatifi <bilgi@acik-kaynak.org> (https://twitter.com/_acikkaynak)",
   "contributors": [
     {
       "name": "Eser Ozvataf",
       "email": "eser@ozvataf.com",
-      "url": "http://eser.ozvataf.com/"
+      "url": "https://eser.ozvataf.com/"
     }
   ],
   "repository": {
@@ -27,8 +31,10 @@
   "scripts": {
     "cleanup": "rm -rf yarn.lock node_modules/",
     "lint": "eslint --ext .js,.jsx,.mjs ./src/",
+    "lint:fix": "eslint --ext .js,.jsx,.mjs --fix ./src/",
     "test": "jest",
-    "coverage": "jest --coverage && codecov"
+    "test:coverage": "jest --coverage",
+    "validate": "npm-run-all --parallel lint test"
   },
   "files": [
     "src"
@@ -48,7 +54,15 @@
     "eslint": "^6.6.0",
     "eslint-config-eser": "^2.1.8",
     "eslint-plugin-import": "^2.18.2",
+    "husky": "^3.0.9",
     "jest": "^24.9.0",
+    "npm-run-all": "^4.1.5",
     "serverless-domain-manager": "^3.3.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run validate",
+      "pre-push": "npm run validate"
+    }
   }
 }

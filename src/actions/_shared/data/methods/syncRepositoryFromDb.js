@@ -34,7 +34,7 @@ function syncRepositoryFromDb(userRepository, owner) {
             {
                 'upsert': true,
                 'returnOriginal': false,
-            }
+            },
         );
 
         // todo check if result.ok

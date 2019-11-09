@@ -11,7 +11,7 @@ async function action() {
     return organizationList;
 }
 
-function route(event) {
+function route() {
     return lambdaContext(
         () => action(),
     );

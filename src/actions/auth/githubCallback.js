@@ -27,7 +27,7 @@ async function action(query) {
 
             userId: userRecord._id.toString(),
             userGithubId: userRecord.githubId,
-        }
+        },
     );
 
     return {

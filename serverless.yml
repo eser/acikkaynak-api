@@ -180,7 +180,7 @@ plugins:
 
 custom:
   customDomain:
-    domainName: api.acikkaynak.info
+    domainName: api.acik-kaynak.org
     basePath: ''
     stage: ${self:provider.stage}
     createRoute53Record: true

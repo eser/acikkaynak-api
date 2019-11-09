@@ -7,10 +7,10 @@ async function getUserOrganizationsSingle(authToken, cursor) {
         paging = '';
     }
     else {
-      paging = ` after: "${cursor}"`;
+        paging = ` after: "${cursor}"`;
     }
 
-    const response = await graphql({
+    const response = await graphql.graphql({
         query: `
           query {
             viewer {
@@ -53,9 +53,10 @@ async function getUserOrganizationsSingle(authToken, cursor) {
 
 async function getUserOrganizations(authToken) {
     let result = [];
-    let lastCursor = undefined;
+    let lastCursor; // will be initialized as undefined
 
     for (;;) {
+        // eslint-disable-next-line no-await-in-loop
         const page = await getUserOrganizationsSingle(authToken, lastCursor);
 
         result = result.concat(page.nodes);
