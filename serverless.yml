@@ -54,7 +54,7 @@ provider:
 # aws ssm put-parameter --name AUTH_GITHUB_CLIENT_SECRET --type String --value ..
 # aws ssm put-parameter --name MONGODB_CONNECTION_STRING --type String --value ..
   environment:
-    WEBSERVICE_ENDPOINT: https://api.acikkaynak.info
+    WEBSERVICE_ENDPOINT: https://api.acik-kaynak.org
     AUTH_GITHUB_CLIENT_ID: ${ssm:AUTH_GITHUB_CLIENT_ID}
     AUTH_GITHUB_CLIENT_SECRET: ${ssm:AUTH_GITHUB_CLIENT_SECRET}
     MONGODB_CONNECTION_STRING: ${ssm:MONGODB_CONNECTION_STRING}

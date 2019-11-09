@@ -1,4 +1,4 @@
-@serviceUrl = https://api.acikkaynak.info
+@serviceUrl = https://api.acik-kaynak.org
 
 ##
 ## GRAPHQL
