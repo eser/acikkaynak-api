@@ -77,14 +77,14 @@ provider:
 
 functions:
   index:
-    handler: src/actions/index.default
+    handler: src/routerServerless.root
     events:
       - http:
           path: ''
           method: get
           cors: true
   graphql:
-    handler: src/actions/graphql/index.default
+    handler: src/routerServerless.graphql
     events:
       - http:
           path: 'graphql'
@@ -95,56 +95,56 @@ functions:
           method: get
           cors: true
   authGithub:
-    handler: src/actions/auth/github.default
+    handler: src/routerServerless.authGitHub
     events:
       - http:
           path: 'auth/github'
           method: get
           cors: true
   authGithubCallback:
-    handler: src/actions/auth/githubCallback.default
+    handler: src/routerServerless.authGitHubCallback
     events:
       - http:
           path: 'auth/githubCallback'
           method: get
           cors: true
   listsProjects:
-    handler: src/actions/lists/projects/index.default
+    handler: src/routerServerless.listsProjects
     events:
       - http:
           path: 'lists/projects'
           method: get
           cors: true
   listsOrganizations:
-    handler: src/actions/lists/organizations/index.default
+    handler: src/routerServerless.listsOrganizations
     events:
       - http:
           path: 'lists/organizations'
           method: get
           cors: true
   githubProfile:
-    handler: src/actions/github/profile.default
+    handler: src/routerServerless.gitHubProfile
     events:
       - http:
           path: 'github/profile'
           method: get
           cors: true
   githubImportUser:
-    handler: src/actions/github/importUser.default
+    handler: src/routerServerless.gitHubImportUser
     events:
       - sqs:
           arn:
             Fn::GetAtt: [ UsersQueue, Arn ]
           batchSize: 1
   githubImportOrganization:
-    handler: src/actions/github/importOrganization.default
+    handler: src/routerServerless.gitHubImportOrganization
     events:
       - sqs:
           arn:
             Fn::GetAtt: [ OrganizationsQueue, Arn ]
           batchSize: 1
   githubImportRepository:
-    handler: src/actions/github/importRepository.default
+    handler: src/routerServerless.gitHubImportRepository
     events:
       - sqs:
           arn:

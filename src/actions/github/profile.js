@@ -1,4 +1,3 @@
-const lambdaContext = require('../_shared/lambdaContext');
 const getUser = require('../_shared/github/api/getUser');
 
 async function action(authorizationHeader) {
@@ -7,13 +6,6 @@ async function action(authorizationHeader) {
     return user;
 }
 
-function route(event) {
-    return lambdaContext(
-        () => action(event.headers.Authorization),
-    );
-}
-
 module.exports = {
-    'default': route,
-    'action': action,
+    'default': action,
 };

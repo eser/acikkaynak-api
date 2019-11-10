@@ -1,4 +1,3 @@
-const lambdaContext = require('../_shared/lambdaContext');
 const getUserRepositories = require('../_shared/github/api/getUserRepositories');
 const syncRepositoryFromDb = require('../_shared/data/methods/syncRepositoryFromDb');
 const queueAdd = require('../_shared/queue/add');
@@ -34,13 +33,6 @@ async function action(message) {
     }
 }
 
-function route(event) {
-    return lambdaContext(
-        () => action(JSON.parse(event.Records[0].body)),
-    );
-}
-
 module.exports = {
-    'default': route,
-    'action': action,
+    'default': action,
 };

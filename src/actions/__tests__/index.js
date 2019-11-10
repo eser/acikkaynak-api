@@ -1,4 +1,4 @@
-const indexAction = require('../index').action;
+const indexAction = require('../index').default;
 
 describe('dummyCategory', () => {
     test('message check', async () => {
