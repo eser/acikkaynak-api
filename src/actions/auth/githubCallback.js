@@ -1,10 +1,10 @@
-const oauthClient = require('../_shared/github/oauthClient');
+const getOauthClient = require('../_shared/github/oauthClient');
 const getUser = require('../_shared/github/api/getUser');
 const syncUserFromDb = require('../_shared/data/methods/syncUserFromDb');
 const queueAdd = require('../_shared/queue/add');
 
 async function getTokens(uri) {
-    const tokens = await oauthClient.code.getToken(uri);
+    const tokens = await getOauthClient().code.getToken(uri);
 
     return tokens;
 }

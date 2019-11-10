@@ -3,10 +3,13 @@
 
 // Require the framework and route definitions
 const fastify = require('fastify');
+const dotenv = require('dotenv');
 
 const router = require('./src/routerFastify');
 
 // Instantiate the server and the router
+dotenv.config();
+
 const server = fastify({ logger: true });
 
 router(server);

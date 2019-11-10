@@ -52,6 +52,7 @@
   },
   "devDependencies": {
     "codecov": "^3.6.1",
+    "dotenv": "^8.2.0",
     "eslint": "^6.6.0",
     "eslint-config-eser": "^2.1.8",
     "eslint-plugin-import": "^2.18.2",
