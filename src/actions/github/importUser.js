@@ -1,6 +1,6 @@
-const getUserRepositories = require('../_shared/github/api/getUserRepositories');
+const getUserRepositories = require('../_shared/github/methods/getUserRepositories');
 const syncRepositoryFromDb = require('../_shared/data/methods/syncRepositoryFromDb');
-const queueAdd = require('../_shared/queue/add');
+const enqueueRepository = require('../_shared/queue/methods/enqueueRepository');
 
 async function processUserRepository(message, userRepository) {
     const userRepositoryRecord = await syncRepositoryFromDb(
@@ -8,17 +8,14 @@ async function processUserRepository(message, userRepository) {
         message.userId,
     );
 
-    await queueAdd(
-        process.env.SQS_QUEUE_REPOSITORIES,
-        {
-            tokenType: message.tokenType,
-            accessToken: message.accessToken,
-            refreshToken: message.refreshToken,
+    await enqueueRepository({
+        tokenType: message.tokenType,
+        accessToken: message.accessToken,
+        refreshToken: message.refreshToken,
 
-            repositoryId: userRepositoryRecord._id.toString(),
-            repositoryGithubId: userRepositoryRecord.githubId,
-        },
-    );
+        repositoryId: userRepositoryRecord._id.toString(),
+        repositoryGithubId: userRepositoryRecord.githubId,
+    });
 }
 
 async function action(message) {
@@ -26,11 +23,11 @@ async function action(message) {
 
     const userRepositories = await getUserRepositories(message.accessToken);
 
-    // eslint-disable-next-line no-restricted-syntax
-    for (const userRepository of userRepositories) {
-        // eslint-disable-next-line no-await-in-loop
-        await processUserRepository(message, userRepository);
-    }
+    const promises = userRepositories.map(
+        userRepository => processUserRepository(message, userRepository),
+    );
+
+    return Promise.all(promises);
 }
 
 module.exports = {

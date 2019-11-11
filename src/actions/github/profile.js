@@ -1,4 +1,4 @@
-const getUser = require('../_shared/github/api/getUser');
+const getUser = require('../_shared/github/methods/getUser');
 
 async function action(authorizationHeader) {
     const user = await getUser(authorizationHeader);

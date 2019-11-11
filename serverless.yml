@@ -27,13 +27,20 @@ provider:
 
 # you can add statements to the Lambda function's IAM Role here
   iamRoleStatements:
-    - Effect: 'Allow'
+    - Effect: Allow
       Action:
-        - 'sqs:SendMessage'
+        - SQS:SendMessage
       Resource:
         - Fn::GetAtt: [ UsersQueue, Arn ]
         - Fn::GetAtt: [ OrganizationsQueue, Arn ]
         - Fn::GetAtt: [ RepositoriesQueue, Arn ]
+    - Effect: Allow
+      Action:
+        - SNS:Publish
+      Resource:
+        - Ref: UsersUpdate
+        - Ref: OrganizationsUpdate
+        - Ref: RepositoriesUpdate
 
 #    - Effect: "Allow"
 #      Action:
@@ -54,11 +61,17 @@ provider:
 # aws ssm put-parameter --name AUTH_GITHUB_CLIENT_SECRET --type String --value ..
 # aws ssm put-parameter --name MONGODB_CONNECTION_STRING --type String --value ..
   environment:
-    WEBSERVICE_ENDPOINT: https://api.acik-kaynak.org
-    AUTH_GITHUB_CLIENT_ID: ${ssm:AUTH_GITHUB_CLIENT_ID}
-    AUTH_GITHUB_CLIENT_SECRET: ${ssm:AUTH_GITHUB_CLIENT_SECRET}
-    MONGODB_CONNECTION_STRING: ${ssm:MONGODB_CONNECTION_STRING}
-    MONGODB_DATABASE_NAME: acikkaynak
+    # WEBSERVICE_ENDPOINT: https://api.acik-kaynak.org
+    # AUTH_GITHUB_CLIENT_ID: ${ssm:AUTH_GITHUB_CLIENT_ID}
+    # AUTH_GITHUB_CLIENT_SECRET: ${ssm:AUTH_GITHUB_CLIENT_SECRET}
+    # MONGODB_CONNECTION_STRING: ${ssm:MONGODB_CONNECTION_STRING}
+    # MONGODB_DATABASE_NAME: acikkaynak
+    SNS_UPDATE_USERS:
+      Ref: UsersUpdate
+    SNS_UPDATE_ORGANIZATIONS:
+      Ref: OrganizationsUpdate
+    SNS_UPDATE_REPOSITORIES:
+      Ref: RepositoriesUpdate
     SQS_QUEUE_USERS:
       Ref: UsersQueue
     SQS_QUEUE_ORGANIZATIONS:
@@ -154,6 +167,18 @@ functions:
 # you can add CloudFormation resource templates here
 resources:
   Resources:
+    UsersUpdate:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: UsersUpdate
+    OrganizationsUpdate:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: OrganizationsUpdate
+    RepositoriesUpdate:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: RepositoriesUpdate
     UsersQueue:
       Type: AWS::SQS::Queue
       Properties:
@@ -177,10 +202,16 @@ resources:
 
 plugins:
   - serverless-domain-manager
-
+  - serverless-dotenv-plugin
+  - serverless-cloudside-plugin
+  - serverless-offline-sns
+  - serverless-offline
 custom:
   customDomain:
     domainName: api.acik-kaynak.org
     basePath: ''
     stage: ${self:provider.stage}
     createRoute53Record: true
+  serverless-offline-sns:
+    port: 4002 # a free port for the sns server to run on
+    debug: true

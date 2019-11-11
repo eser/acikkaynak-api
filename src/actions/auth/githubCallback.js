@@ -1,7 +1,7 @@
 const getOauthClient = require('../_shared/github/oauthClient');
-const getUser = require('../_shared/github/api/getUser');
+const getUser = require('../_shared/github/methods/getUser');
 const syncUserFromDb = require('../_shared/data/methods/syncUserFromDb');
-const queueAdd = require('../_shared/queue/add');
+const publishUsersUpdate = require('../_shared/notifications/methods/publishUsersUpdate');
 
 async function getTokens(uri) {
     const tokens = await getOauthClient().code.getToken(uri);
@@ -17,17 +17,14 @@ async function action(query) {
     const user = await getUser(tokens.accessToken);
     const userRecord = await syncUserFromDb(user, true);
 
-    await queueAdd(
-        process.env.SQS_QUEUE_USERS,
-        {
-            tokenType: tokens.tokenType,
-            accessToken: tokens.accessToken,
-            refreshToken: tokens.refreshToken,
+    await publishUsersUpdate({
+        tokenType: tokens.tokenType,
+        accessToken: tokens.accessToken,
+        refreshToken: tokens.refreshToken,
 
-            userId: userRecord._id.toString(),
-            userGithubId: userRecord.githubId,
-        },
-    );
+        userId: userRecord._id.toString(),
+        userGithubId: userRecord.githubId,
+    });
 
     return {
         tokenType: tokens.tokenType,

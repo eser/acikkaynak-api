@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk');
 
-async function add(topic, message) {
+async function enqueue(topic, message) {
     const sqs = new AWS.SQS();
 
     const params = {
@@ -14,4 +14,6 @@ async function add(topic, message) {
     return result;
 }
 
-module.exports = add;
+module.exports = {
+    'enqueue': enqueue,
+};
