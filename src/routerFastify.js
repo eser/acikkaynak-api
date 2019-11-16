@@ -40,8 +40,8 @@ async function fastifyContext(reply, func) {
 function router(server) {
     server.get('/', (request, reply) => fastifyContext(reply, () => actionRoot(request.headers)));
 
-    server.get('/graphql', (request, reply) => fastifyContext(reply, () => actionGraphQL()));
-    server.post('/graphql', (request, reply) => fastifyContext(reply, () => actionGraphQL()));
+    server.get('/graphql', (request, reply) => fastifyContext(reply, () => actionGraphQL(request.body)));
+    server.post('/graphql', (request, reply) => fastifyContext(reply, () => actionGraphQL(request.body)));
 
     server.get('/auth/github', (request, reply) => fastifyContext(reply, () => actionAuthGitHub()));
     server.get('/auth/githubCallback', (request, reply) => fastifyContext(reply, () => actionAuthGitHubCallback(request.query)));

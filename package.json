@@ -45,11 +45,10 @@
   "bin": {},
   "dependencies": {
     "@octokit/graphql": "^4.3.1",
-    "apollo-server-lambda": "^2.9.7",
-    "aws-sdk": "^2.568.0",
+    "aws-sdk": "^2.573.0",
     "client-oauth2": "^4.2.5",
     "graphql": "^14.5.8",
-    "mongodb": "^3.3.3",
+    "mongodb": "^3.3.4",
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {
