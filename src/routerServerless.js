@@ -43,7 +43,7 @@ async function lambdaContext(func) {
 
 const routes = {
     'root': event => lambdaContext(() => actionRoot(event)),
-    'graphql': event => lambdaContext(() => actionGraphQL(event.body)),
+    'graphql': event => lambdaContext(() => { const query = JSON.parse(event.body).query; return actionGraphQL(query); }),
     'authGitHub': () => lambdaContext(() => actionAuthGitHub()),
     'authGitHubCallback': event => lambdaContext(() => actionAuthGitHubCallback(event.queryStringParameters)),
     'listsProjects': () => lambdaContext(() => actionListsProjects()),
