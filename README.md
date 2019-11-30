@@ -21,9 +21,9 @@ Bu kod tabanında, şu anda yapım aşamasında bulunan [api.acik-kaynak.org](ht
 Repository'i klonlayıp, npm üzerinden bağımlılıkları çekerek çalışma ortamınızı hazır hale getirin.
 
 ```sh
-git clone https://github.com/acikkaynak/acikkaynak-api.git
-cd acikkaynak-api
-yarn install
+$ git clone https://github.com/acikkaynak/acikkaynak-api.git
+$ cd acikkaynak-api
+$ yarn install
 ```
 
 `.env.sample` dosyasının bir kopyasını `.env` ismi ile oluşturun ve dosyada bulunan ayarları girin.
@@ -45,10 +45,27 @@ Bazı kod standartları otomatik olarak düzeltilebilmektedir, bunu sağlamak i�
 Aynı zamanda yazmış olduğunuz birim testlerini `yarn test` komutu ile başlatabilirsiniz. Testler de aynı lint işlemi gibi
 hem pull request hem de push esnasında GitHub Actions tarafından CI/CD otomasyonuna bağlı olarak çalıştırılmaktadır.
 
-### Yükleme
+### API Fonksiyonlarını AWS'e Yükleme
 
-`yarn deploy:prod` komutu ile yerelde aws-cli ile kullandığınız kendi AWS Lambda kaynağınıza yükleme
-gerçekleştirebilirsiniz.
+- Amazon Web Services'dan Access Keylerinizi temin edin ve aws-cli aracılığıyla AWS hesabınızı sisteminize tanıtın.
+
+```sh
+$ aws configure
+AWS Access Key ID [None]: KEY
+AWS Secret Access Key [None]: SECRET
+Default region name [None]: eu-west-1
+Default output format [None]: 
+```
+
+- `.env` dosyasında uygulamanın bağlanacağı MongoDB connection string'i v.b. ayarları belirttiğinizden emin olun.
+
+- `serverless.yml` dosyası içerisine bir göz gezdirin.
+
+- Her şey hazır ise AWS üzerine yüklemenizi gerçekleştirebilirsiniz.
+
+```sh
+$ yarn deploy:prod
+```
 
 
 ## Dizin Yapısı
