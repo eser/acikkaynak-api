@@ -1,6 +1,6 @@
 const dataContext = require('../dataContext');
 
-function syncUserFromDb(user, isLoggedIn) {
+function syncUserFromDb(user, lastOptIn) {
     return dataContext(async (db) => {
         const fields = {
             $set: {
@@ -24,11 +24,11 @@ function syncUserFromDb(user, isLoggedIn) {
             },
         };
 
-        if (isLoggedIn) {
-            fields.$set.isLoggedIn = true;
+        if (lastOptIn !== undefined) {
+            fields.$set.lastOptIn = lastOptIn;
         }
         else {
-            fields.$setOnInsert = { isLoggedIn: isLoggedIn };
+            fields.$setOnInsert = { lastOptIn: lastOptIn };
         }
 
         const result = await db.collection('users').findOneAndUpdate(

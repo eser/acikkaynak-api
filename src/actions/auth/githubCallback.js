@@ -15,7 +15,7 @@ async function action(query) {
     });
 
     const user = await getUser(tokens.accessToken);
-    const userRecord = await syncUserFromDb(user, true);
+    const userRecord = await syncUserFromDb(user, new Date());
 
     await publishUsersUpdate({
         tokenType: tokens.tokenType,

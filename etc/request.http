@@ -1,4 +1,5 @@
-@serviceUrl = https://api.acik-kaynak.org
+# @serviceUrl = https://api.acik-kaynak.org
+@serviceUrl = http://localhost:3000
 
 ##
 ## GRAPHQL
@@ -6,9 +7,12 @@
 
 POST {{serviceUrl}}/graphql
 Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
 
 query {
-  hello
+  user(id: "eser") {
+    name
+  }
 }
 
 ###
