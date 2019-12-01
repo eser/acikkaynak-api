@@ -5,9 +5,7 @@ function syncRepositoryFromDb(userRepository, owner) {
     return dataContext(async (db) => {
         const fields = {
             $set: {
-                'githubId': userRepository.id,
                 'owner': ObjectID(owner),
-                'ownerGithubId': (userRepository.owner !== undefined) ? userRepository.owner.id : null,
                 'name': userRepository.name,
                 'description': userRepository.description,
                 'homepage': userRepository.homepageUrl,
@@ -18,6 +16,8 @@ function syncRepositoryFromDb(userRepository, owner) {
                 'defaultBranch': (userRepository.defaultBranchRef !== undefined) ? userRepository.defaultBranchRef.name : null,
                 'githubUri': userRepository.url,
                 'sshUri': userRepository.sshUrl,
+                'providers.github.id': userRepository.id,
+                'providers.github.ownerId': (userRepository.owner !== undefined) ? userRepository.owner.id : null,
                 'stats.stars': userRepository.stargazers.totalCount,
                 'stats.watches': userRepository.watchers.totalCount,
                 'stats.forks': userRepository.forkCount,
@@ -29,7 +29,7 @@ function syncRepositoryFromDb(userRepository, owner) {
         };
 
         const result = await db.collection('repositories').findOneAndUpdate(
-            { githubId: userRepository.id },
+            { 'providers.github.id': userRepository.id },
             fields,
             {
                 'upsert': true,

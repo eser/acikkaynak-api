@@ -14,7 +14,7 @@ async function processUserRepository(message, userRepository) {
         refreshToken: message.refreshToken,
 
         repositoryId: userRepositoryRecord._id.toString(),
-        repositoryGithubId: userRepositoryRecord.githubId,
+        repositoryGithubId: userRepositoryRecord.providers.github.id,
     });
 }
 

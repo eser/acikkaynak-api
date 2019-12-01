@@ -10,8 +10,32 @@ Content-Type: application/json
 X-REQUEST-TYPE: GraphQL
 
 query {
-  user(id: "eser") {
+  user(id: "5c733cdca66829910792d9d7") {
+    _id,
+    profileImageUri
     name
+    location
+    bio
+    company
+    githubUri
+  }
+}
+
+###
+
+POST {{serviceUrl}}/graphql
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+query {
+  users {
+    _id,
+    profileImageUri
+    name
+    location
+    bio
+    company
+    githubUri
   }
 }
 

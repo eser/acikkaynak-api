@@ -1,10 +1,11 @@
 const dataContext = require('../dataContext');
 
-function syncUserFromDb(user, lastOptIn) {
+function syncUserFromDb(user, provider, lastOptIn) {
     return dataContext(async (db) => {
+        const providerKey = `providers.${provider}.id`;
+
         const fields = {
             $set: {
-                'githubId': user.id,
                 'name': user.name,
                 'bio': user.bio,
                 'login': user.login,
@@ -15,6 +16,7 @@ function syncUserFromDb(user, lastOptIn) {
                 'profileImageUri': user.avatarUrl,
                 'githubUri': user.url,
                 'siteUri': user.websiteUrl,
+                [providerKey]: user.id,
                 'stats.organizations': user.organizations.totalCount,
                 'stats.repositories': user.repositories.totalCount,
                 'stats.followers': user.followers.totalCount,
@@ -32,7 +34,7 @@ function syncUserFromDb(user, lastOptIn) {
         }
 
         const result = await db.collection('users').findOneAndUpdate(
-            { githubId: user.id },
+            { [providerKey]: user.id },
             fields,
             {
                 'upsert': true,

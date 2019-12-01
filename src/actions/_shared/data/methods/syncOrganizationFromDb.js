@@ -4,7 +4,6 @@ function syncOrganizationFromDb(userOrganization) {
     return dataContext(async (db) => {
         const fields = {
             $set: {
-                'githubId': userOrganization.id,
                 'name': userOrganization.name,
                 'login': userOrganization.login,
                 'email': userOrganization.email,
@@ -13,13 +12,14 @@ function syncOrganizationFromDb(userOrganization) {
                 'profileImageUri': userOrganization.avatarUrl,
                 'githubUri': userOrganization.url,
                 'siteUri': userOrganization.websiteUrl,
+                'providers.github.id': userOrganization.id,
                 'stats.repositories': userOrganization.repositories.totalCount,
                 'stats.members': userOrganization.memberStatuses.totalCount,
             },
         };
 
         const result = await db.collection('organizations').findOneAndUpdate(
-            { githubId: userOrganization.id },
+            { 'providers.github.id': userOrganization.id },
             fields,
             {
                 'upsert': true,
