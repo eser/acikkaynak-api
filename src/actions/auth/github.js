@@ -1,4 +1,4 @@
-const getOauthClient = require('../_shared/github/oauthClient');
+const getOauthClient = require('../../shared/github/oauthClient');
 
 function action() {
     return {

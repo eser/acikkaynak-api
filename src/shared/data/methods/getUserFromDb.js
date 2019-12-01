@@ -4,7 +4,7 @@ const dataContext = require('../dataContext');
 function getUserFromDb(id) {
     return dataContext(async (db) => {
         const result = await db.collection('users').findOne(
-            { _id: ObjectID(id) }
+            { _id: ObjectID(id) },
         );
 
         // todo check if result.ok

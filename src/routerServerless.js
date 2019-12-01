@@ -8,6 +8,7 @@ const actionGitHubProfile = require('./actions/github/profile').default;
 const actionGitHubImportUser = require('./actions/github/importUser').default;
 const actionGitHubImportOrganization = require('./actions/github/importOrganization').default;
 const actionGitHubImportRepository = require('./actions/github/importRepository').default;
+const actionEventUsersUpdate = require('./actions/users/eventUsersUpdate').default;
 
 function fixExceptionObjectResult(ex) {
     const serialized = JSON.stringify(ex, Object.getOwnPropertyNames(ex));
@@ -56,6 +57,7 @@ const routes = {
     'gitHubImportUser': event => lambdaContext(() => actionGitHubImportUser(JSON.parse(event.Records[0].body))),
     'gitHubImportOrganization': event => lambdaContext(() => actionGitHubImportOrganization(JSON.parse(event.Records[0].body))),
     'gitHubImportRepository': event => lambdaContext(() => actionGitHubImportRepository(JSON.parse(event.Records[0].body))),
+    'eventUsersUpdate': event => lambdaContext(() => actionEventUsersUpdate(event)),
 };
 
 module.exports = routes;

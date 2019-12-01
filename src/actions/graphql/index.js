@@ -1,7 +1,7 @@
 const { graphql, buildSchema } = require('graphql');
 
-const getUserFromDb = require('../_shared/data/methods/getUserFromDb');
-const getUserListFromDb = require('../_shared/data/methods/getUserListFromDb');
+const getUserFromDb = require('../../shared/data/methods/getUserFromDb');
+const getUserListFromDb = require('../../shared/data/methods/getUserListFromDb');
 
 const schema = buildSchema(`
     type User {
@@ -26,7 +26,7 @@ async function getUser(props) {
     return result;
 }
 
-async function getUserList(props, cursor) {
+async function getUserList() { // props, cursor
     const result = await getUserListFromDb();
 
     return result;

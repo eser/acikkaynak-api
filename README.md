@@ -74,7 +74,7 @@ $ yarn deploy:prod
 |-------------------------------------------------|-----------------------------------------------------------------|
 | `/src/`                                         | Kaynak dosyalarını içeren klasör                                |
 | `/src/actions/`                                 | API'lara ait fonksiyonları içeren klasör                        |
-| `/src/actions/_shared/`                         | API fonksiyonlarının ortak kullandığı yapılar                   |
+| `/src/shared/`                                  | API fonksiyonlarının ortak kullandığı yapılar                   |
 | `/serverless.yml`                               | Serverless framework konfigurasyonu                             |
 
 

@@ -1,6 +1,6 @@
-const getUserRepositories = require('../_shared/github/methods/getUserRepositories');
-const syncRepositoryFromDb = require('../_shared/data/methods/syncRepositoryFromDb');
-const enqueueRepository = require('../_shared/queue/methods/enqueueRepository');
+const getUserRepositories = require('../../shared/github/methods/getUserRepositories');
+const syncRepositoryFromDb = require('../../shared/data/methods/syncRepositoryFromDb');
+const enqueueRepository = require('../../shared/queue/methods/enqueueRepository');
 
 async function processUserRepository(message, userRepository) {
     const userRepositoryRecord = await syncRepositoryFromDb(
