@@ -52,7 +52,7 @@
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {
-    "codecov": "^3.6.1",
+    "codecov": "^3.6.5",
     "dotenv": "^8.2.0",
     "eslint": "^6.7.2",
     "eslint-config-eser": "^2.1.8",
