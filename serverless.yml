@@ -21,7 +21,7 @@ service: acikkaynak-api # NOTE: update this with your service name
 
 provider:
   name: aws
-  runtime: nodejs8.10
+  runtime: nodejs12.x
 
 # you can overwrite defaults here
 #  stage: dev
@@ -121,6 +121,13 @@ functions:
     events:
       - http:
           path: 'auth/githubCallback'
+          method: get
+          cors: true
+  news:
+    handler: src/routerServerless.news
+    events:
+      - http:
+          path: 'news'
           method: get
           cors: true
   listsProjects:

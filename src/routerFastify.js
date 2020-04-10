@@ -2,6 +2,7 @@ const actionRoot = require('./actions/index').default;
 const actionGraphQL = require('./actions/graphql/index').default;
 const actionAuthGitHub = require('./actions/auth/github').default;
 const actionAuthGitHubCallback = require('./actions/auth/githubCallback').default;
+const actionNews = require('./actions/news/index').default;
 const actionListsProjects = require('./actions/lists/projects/index').default;
 const actionListsOrganizations = require('./actions/lists/organizations/index').default;
 const actionGitHubProfile = require('./actions/github/profile').default;
@@ -45,6 +46,8 @@ function router(server) {
 
     server.get('/auth/github', (request, reply) => fastifyContext(reply, () => actionAuthGitHub()));
     server.get('/auth/githubCallback', (request, reply) => fastifyContext(reply, () => actionAuthGitHubCallback(request.query)));
+
+    server.get('/news', (request, reply) => fastifyContext(reply, () => actionNews()));
 
     server.get('/lists/projects', (request, reply) => fastifyContext(reply, () => actionListsProjects()));
     server.get('/lists/organizations', (request, reply) => fastifyContext(reply, () => actionListsOrganizations()));

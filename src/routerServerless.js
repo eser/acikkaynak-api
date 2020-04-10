@@ -2,6 +2,7 @@ const actionRoot = require('./actions/index').default;
 const actionGraphQL = require('./actions/graphql/index').default;
 const actionAuthGitHub = require('./actions/auth/github').default;
 const actionAuthGitHubCallback = require('./actions/auth/githubCallback').default;
+const actionNews = require('./actions/news/index').default;
 const actionListsProjects = require('./actions/lists/projects/index').default;
 const actionListsOrganizations = require('./actions/lists/organizations/index').default;
 const actionGitHubProfile = require('./actions/github/profile').default;
@@ -51,6 +52,7 @@ const routes = {
     }),
     'authGitHub': () => lambdaContext(() => actionAuthGitHub()),
     'authGitHubCallback': event => lambdaContext(() => actionAuthGitHubCallback(event.queryStringParameters)),
+    'news': () => lambdaContext(() => actionNews()),
     'listsProjects': () => lambdaContext(() => actionListsProjects()),
     'listsOrganizations': () => lambdaContext(() => actionListsOrganizations()),
     'gitHubProfile': event => lambdaContext(() => actionGitHubProfile(event.headers.Authorization)),
