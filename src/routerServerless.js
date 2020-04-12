@@ -5,6 +5,7 @@ const actionAuthGitHubCallback = require('./actions/auth/githubCallback').defaul
 const actionNews = require('./actions/news/index').default;
 const actionListsProjects = require('./actions/lists/projects/index').default;
 const actionListsOrganizations = require('./actions/lists/organizations/index').default;
+const actionEvents = require('./actions/events/index').default;
 const actionGitHubProfile = require('./actions/github/profile').default;
 const actionGitHubImportUser = require('./actions/github/importUser').default;
 const actionGitHubImportOrganization = require('./actions/github/importOrganization').default;
@@ -55,6 +56,7 @@ const routes = {
     'news': () => lambdaContext(() => actionNews()),
     'listsProjects': () => lambdaContext(() => actionListsProjects()),
     'listsOrganizations': () => lambdaContext(() => actionListsOrganizations()),
+    'events': () => lambdaContext(() => actionEvents()),
     'gitHubProfile': event => lambdaContext(() => actionGitHubProfile(event.headers.Authorization)),
     'gitHubImportUser': event => lambdaContext(() => actionGitHubImportUser(JSON.parse(event.Records[0].body))),
     'gitHubImportOrganization': event => lambdaContext(() => actionGitHubImportOrganization(JSON.parse(event.Records[0].body))),

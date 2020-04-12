@@ -144,6 +144,13 @@ functions:
           path: 'lists/organizations'
           method: get
           cors: true
+  events:
+    handler: src/routerServerless.events
+    events:
+      - http:
+          path: 'events'
+          method: get
+          cors: true
   githubProfile:
     handler: src/routerServerless.gitHubProfile
     events:

@@ -6,9 +6,9 @@
     "kaynak",
     "api"
   ],
-  "version": "0.10.1",
+  "version": "0.10.2",
   "homepage": "https://api.acik-kaynak.org",
-  "author": "Acik Kaynak Inisiyatifi <bilgi@acik-kaynak.org> (https://twitter.com/_acikkaynak)",
+  "author": "açık-kaynak.org <bilgi@acik-kaynak.org> (https://twitter.com/_acikkaynak)",
   "contributors": [
     {
       "name": "Eser Ozvataf",

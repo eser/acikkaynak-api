@@ -5,6 +5,7 @@ const actionAuthGitHubCallback = require('./actions/auth/githubCallback').defaul
 const actionNews = require('./actions/news/index').default;
 const actionListsProjects = require('./actions/lists/projects/index').default;
 const actionListsOrganizations = require('./actions/lists/organizations/index').default;
+const actionEvents = require('./actions/events/index').default;
 const actionGitHubProfile = require('./actions/github/profile').default;
 // const actionGitHubImportUser = require('./actions/github/importUser').default;
 // const actionGitHubImportOrganization = require('./actions/github/importOrganization').default;
@@ -51,6 +52,8 @@ function router(server) {
 
     server.get('/lists/projects', (request, reply) => fastifyContext(reply, () => actionListsProjects()));
     server.get('/lists/organizations', (request, reply) => fastifyContext(reply, () => actionListsOrganizations()));
+
+    server.get('/events', (request, reply) => fastifyContext(reply, () => actionEvents()));
 
     server.get('/github/profile', (request, reply) => fastifyContext(reply, () => actionGitHubProfile(request.headers.Authorization)));
 }
