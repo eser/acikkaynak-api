@@ -1,33 +1,24 @@
+# acik-kaynak.org projesi serverless framework konfigurasyon dosyasıdır.
+# bu dosyanın formatı ve direktifleri ile ilgili bilgi docs.serverless.com adresinden alınabilir.
+#
+# dosya lokal geliştirme ortamında ancak serverless framework'ün offline plugin'inin sağladığı
+# işlevle kullanılabilir, bunun dışında tamamen projenin canlı ortama yüklenmesi esnasında
+# kullanılacaktır.
+#
+# projenin çalıştırılması ve diğer detayları için README.md dosyası incelenebilir.
+
 org: eserozvataf
 app: acikkaynak-api
-# Welcome to Serverless!
-#
-# This file is the main config file for your service.
-# It's very minimal at this point and uses default values.
-# You can always add more config options for more control.
-# We've included some commented out config examples here.
-# Just uncomment any of them to get that config option.
-#
-# For full config options, check the docs:
-#    docs.serverless.com
-#
-# Happy Coding!
 
-service: acikkaynak-api # NOTE: update this with your service name
-
-# You can pin your service to only deploy with a specific Serverless version
-# Check out our docs for more details
-# frameworkVersion: "=X.X.X"
+service: acikkaynak-api
 
 provider:
   name: aws
   runtime: nodejs12.x
 
-# you can overwrite defaults here
 #  stage: dev
   region: eu-west-1
 
-# you can add statements to the Lambda function's IAM Role here
   iamRoleStatements:
     # - Effect: Allow
     #   Action:

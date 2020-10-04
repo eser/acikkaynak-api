@@ -6,7 +6,6 @@ const fastify = require('fastify');
 const dotenv = require('dotenv');
 
 const router = require('./src/routerFastify');
-
 // Instantiate the server and the router
 dotenv.config();
 
@@ -17,7 +16,10 @@ router(server);
 // Run the server!
 async function start() {
     try {
-        await server.listen(3000);
+        const address = '0.0.0.0'; // might also be ::
+        const port = parseInt(process.env.PORT, 10);
+
+        await server.listen(port, address);
 
         server.log.info(`server listening on ${server.server.address().port}`);
     }

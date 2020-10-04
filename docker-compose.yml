@@ -1,0 +1,46 @@
+version: '3'
+
+networks:
+  frontend:
+    # driver: default
+  backend:
+    driver: bridge
+
+services:
+  app:
+    build: .
+    restart: always
+    networks:
+      - frontend
+      - backend
+    ports:
+      - '3001:3001'
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - KAFKA_HOST=kafka:9092
+      - MONGO_HOST=mongo:27017
+
+  kafka:
+    image: 'spotify/kafka:latest'
+    networks:
+      - backend
+    ports:
+      - '9092:9092'
+    environment:
+      - ADVERTISED_HOST=0.0.0.0
+      - ADVERTISED_PORT=9092
+
+  mongo:
+    image: 'mongo'
+    networks:
+      - backend
+    ports:
+      - '27017-27019:27017-27019'
+    environment:
+      - MONGO_INITDB_DATABASE=database
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=secretpwd
+    volumes:
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo-js:ro
+      - ./tmp/mongo-volume:/data/db

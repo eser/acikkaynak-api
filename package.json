@@ -29,9 +29,8 @@
     "node": ">=10.13.0"
   },
   "scripts": {
-    "cleanup": "rm -rf yarn.lock node_modules/",
+    "cleanup": "rm -rf package-lock.json node_modules/",
     "start": "node server.js",
-    "dev": "serverless offline cloudside",
     "lint": "eslint --ext .js,.jsx,.mjs ./src/",
     "lint:fix": "eslint --ext .js,.jsx,.mjs --fix ./src/",
     "test": "jest",
@@ -44,31 +43,27 @@
   ],
   "bin": {},
   "dependencies": {
-    "@octokit/graphql": "^4.3.1",
-    "aws-sdk": "^2.656.0",
-    "client-oauth2": "^4.2.5",
-    "graphql": "^15.0.0",
-    "mongodb": "^3.5.5",
-    "node-fetch": "^2.6.0"
+    "@octokit/graphql": "^4.5.6",
+    "aws-sdk": "^2.766.0",
+    "client-oauth2": "^4.3.3",
+    "graphql": "^15.3.0",
+    "mongodb": "^3.6.2",
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
-    "codecov": "^3.6.5",
+    "codecov": "^3.7.2",
     "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",
-    "eslint": "^6.8.0",
-    "eslint-config-eser": "^2.1.8",
-    "eslint-plugin-import": "^2.20.2",
-    "fastify": "^2.13.0",
-    "husky": "^4.2.5",
-    "jest": "^25.3.0",
+    "eslint": "^7.10.0",
+    "eslint-config-eser": "^2.1.9",
+    "eslint-plugin-import": "^2.22.1",
+    "fastify": "^3.5.1",
+    "husky": "^4.3.0",
+    "jest": "^26.4.2",
     "npm-run-all": "^4.1.5",
-    "serverless": "^1.67.3",
-    "serverless-cloudside-plugin": "^1.0.3",
-    "serverless-domain-manager": "^3.3.1",
-    "serverless-dotenv-plugin": "^2.3.2",
-    "serverless-offline": "^6.1.4",
-    "serverless-offline-sns": "^0.68.0",
-    "serverless-offline-ssm": "^4.1.2"
+    "serverless": "^2.4.0",
+    "serverless-domain-manager": "^5.0.0",
+    "serverless-dotenv-plugin": "^3.0.0"
   },
   "husky": {
     "hooks": {
