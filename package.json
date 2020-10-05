@@ -46,6 +46,7 @@
     "@octokit/graphql": "^4.5.6",
     "aws-sdk": "^2.766.0",
     "client-oauth2": "^4.3.3",
+    "dotenv": "^8.2.0",
     "fastify": "^3.5.1",
     "graphql": "^15.3.0",
     "kafkajs": "^1.14.0",
@@ -55,7 +56,6 @@
   "devDependencies": {
     "codecov": "^3.7.2",
     "cross-env": "^7.0.2",
-    "dotenv": "^8.2.0",
     "eslint": "^7.10.0",
     "eslint-config-eser": "^2.1.9",
     "eslint-plugin-import": "^2.22.1",
