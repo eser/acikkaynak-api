@@ -24,7 +24,7 @@ function processRepository(payload) {
 }
 
 module.exports = {
-    'default': selectedBroker,
+    selectedBroker,
     publishUsersUpdate,
     processRepository,
 };

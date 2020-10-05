@@ -1,4 +1,4 @@
-const snsClient = require('../snsClient');
+const snsClient = require('./snsClient');
 
 function publishUsersUpdate(message) {
     // eslint-disable-next-line newline-before-return

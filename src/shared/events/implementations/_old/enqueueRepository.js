@@ -1,4 +1,4 @@
-const sqsClient = require('../sqsClient');
+const sqsClient = require('./sqsClient');
 
 function enqueueRepository(message) {
     return sqsClient.enqueue(
