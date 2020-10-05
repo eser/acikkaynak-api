@@ -46,7 +46,9 @@
     "@octokit/graphql": "^4.5.6",
     "aws-sdk": "^2.766.0",
     "client-oauth2": "^4.3.3",
+    "fastify": "^3.5.1",
     "graphql": "^15.3.0",
+    "kafkajs": "^1.14.0",
     "mongodb": "^3.6.2",
     "node-fetch": "^2.6.1"
   },
@@ -57,7 +59,6 @@
     "eslint": "^7.10.0",
     "eslint-config-eser": "^2.1.9",
     "eslint-plugin-import": "^2.22.1",
-    "fastify": "^3.5.1",
     "husky": "^4.3.0",
     "jest": "^26.4.2",
     "npm-run-all": "^4.1.5",

@@ -1,6 +1,6 @@
 const getUserRepositories = require('../../shared/github/methods/getUserRepositories');
 const syncRepositoryFromDb = require('../../shared/data/methods/syncRepositoryFromDb');
-const enqueueRepository = require('../../shared/queue/methods/enqueueRepository');
+const { processRepository } = require('../../shared/events/index');
 
 async function processUserRepository(message, userRepository) {
     const userRepositoryRecord = await syncRepositoryFromDb(
@@ -8,7 +8,7 @@ async function processUserRepository(message, userRepository) {
         message.userId,
     );
 
-    await enqueueRepository({
+    await processRepository({
         tokenType: message.tokenType,
         accessToken: message.accessToken,
         refreshToken: message.refreshToken,
