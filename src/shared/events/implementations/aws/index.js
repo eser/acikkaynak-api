@@ -3,18 +3,10 @@ const AWS = require('aws-sdk');
 const sqs = new AWS.SQS();
 const { AWS_REGION, AWS_ACCOUNT_ID } = process.env;
 
-async function enqueue(topic, payload) {
-    const QueueUrl = `https://sqs.${AWS_REGION}.amazonaws.com/${AWS_ACCOUNT_ID}/${topic}`;
 
-    const params = {
-        MessageBody: JSON.stringify(payload),
-        QueueUrl: QueueUrl,
-    };
-
+function errorHandlerWrapper(action) {
     try {
-        const result = await sqs.sendMessage(params);
-
-        return result;
+        return action();
     }
     catch (err) {
         console.error(err);
@@ -22,28 +14,43 @@ async function enqueue(topic, payload) {
     }
 }
 
-async function dequeue(topic, MaxNumberOfMessages = 10) {
-    const QueueUrl = `https://sqs.${AWS_REGION}.amazonaws.com/${AWS_ACCOUNT_ID}/${topic}`;
+async function enqueueInternal(topic, payload) {
+    const queueUrl = `https://sqs.${AWS_REGION}.amazonaws.com/${AWS_ACCOUNT_ID}/${topic}`;
 
     const params = {
-        QueueUrl,
-        MaxNumberOfMessages,
+        MessageBody: JSON.stringify(payload),
+        QueueUrl: queueUrl,
     };
 
-    try {
-        const result = await sqs.receiveMessage(params);
+    const result = await sqs.sendMessage(params);
 
-        result.Messages = result.Messages.map(_ => ({
-            ..._,
-            Body: JSON.parse(_.Body),
-        }));
+    return result;
+}
 
-        return result;
-    }
-    catch (err) {
-        console.error(err);
-        throw err;
-    }
+function enqueue(...args) {
+    return errorHandlerWrapper(() => enqueueInternal(...args));
+}
+
+async function dequeueInternal(topic, maxNumberOfMessages = 10) {
+    const queueUrl = `https://sqs.${AWS_REGION}.amazonaws.com/${AWS_ACCOUNT_ID}/${topic}`;
+
+    const params = {
+        QueueUrl: queueUrl,
+        MaxNumberOfMessages: maxNumberOfMessages,
+    };
+
+    const result = await sqs.receiveMessage(params);
+
+    result.Messages = result.Messages.map(message => ({
+        ...message,
+        Body: JSON.parse(message.Body),
+    }));
+
+    return result;
+}
+
+function dequeue(...args) {
+    return errorHandlerWrapper(() => dequeueInternal(...args));
 }
 
 module.exports = {
